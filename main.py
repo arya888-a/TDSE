@@ -29,7 +29,7 @@ V[(x > barrier_center - barrier_width/2) & (x < barrier_center + barrier_width/2
 
 #Initial State: Gaussian Wave Packet
 x0 = -30.0               # Initial position of the wave packet
-p0 = 4.0                 # Initial momentum (velocity)
+p0 = 4.5                 # Initial momentum (velocity)
 sigma = 3.0              # Width of the wave packet
 
 # Create the wave packet
