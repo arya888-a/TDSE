@@ -1,16 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-# For better display in notebooks (optional)
+#display in notebooks
 from IPython.display import HTML, display
 
-# --- 1. Define Simulation Parameters ---
+#Simulation Parameters
 N = 1024                 # Number of spatial grid points
 L = 200.0                # Length of the simulation box (-L/2 to L/2)
 dx = L / (N - 1)         # Spatial step size
 x = np.linspace(-L/2, L/2, N)
 
-# Time parameters
 dt = 0.0005              # Time step (must be very small for Euler)
 T_max = 30.0             # Final simulation time
 n_steps = int(T_max / dt)
@@ -19,7 +18,7 @@ n_plot = 100             # Save a frame for animation every n_plot steps
 print(f"Grid points: {N}, Spatial step: {dx:.4f}")
 print(f"Time steps: {n_steps}, Time step: {dt:.6f}")
 
-# --- 2. Define Potential (V) and Initial State (Psi) ---
+#Potential (V) and Initial State (Psi)
 
 # A) Potential: Square barrier
 V0 = 10.0                # Potential barrier height
@@ -28,12 +27,12 @@ barrier_center = 15.0    # Center of the barrier
 V = np.zeros(N)
 V[(x > barrier_center - barrier_width/2) & (x < barrier_center + barrier_width/2)] = V0
 
-# B) Initial State: Gaussian Wave Packet
+#Initial State: Gaussian Wave Packet
 x0 = -30.0               # Initial position of the wave packet
 p0 = 4.0                 # Initial momentum (velocity)
 sigma = 3.0              # Width of the wave packet
 
-# Create the wave packet (not yet normalized)
+# Create the wave packet
 Psi_t = np.exp(-(x - x0)**2 / (4 * sigma**2)) * np.exp(1j * p0 * x)
 Psi_t = Psi_t.astype(complex) # Ensure complex type
 
@@ -42,8 +41,8 @@ norm_initial = np.sum(np.abs(Psi_t)**2) * dx
 Psi_t = Psi_t / np.sqrt(norm_initial)
 print(f"Initial Norm: {np.sum(np.abs(Psi_t)**2) * dx:.6f}")
 
-# --- 3. Function to Apply the Hamiltonian (H * Psi) ---
-# This function calculates the action of H on the wave function
+#Function to Apply the Hamiltonian (H * Psi)
+#This function calculates the action of H on the wave function
 
 def apply_H(Psi_in, V_pot, dx_val):
     # Calculate the second derivative (Laplacian) using Finite Difference
@@ -62,7 +61,7 @@ def apply_H(Psi_in, V_pot, dx_val):
     H_Psi = -0.5 * d2Psi_dx2 + V_pot * Psi_in
     return H_Psi
 
-# --- 4. Time Evolution Loop (Forward Euler) ---
+#Time Evolution Loop (Forward Euler)
 
 frames = []           # List to store animation frames
 norms = []            # List to store the norm over time
@@ -92,9 +91,7 @@ for i in range(n_steps):
 
 print("Simulation finished.")
 
-# --- 5. Analysis and Output ---
-
-# A) Plot of |Psi|^2 integral (Norm conservation)
+#Plot of |Psi|^2 integral (Norm conservation)
 print("\n--- Plotting Norm vs. Time ---")
 plt.figure(figsize=(10, 5))
 plt.plot(times, norms, 'r-')
@@ -106,7 +103,7 @@ plt.ylim(0.99, max(norms) * 1.01)
 plt.grid(True)
 plt.show()
 
-# B) Animation of Time Evolution
+#Animation of Time Evolution
 print("--- Creating Animation ---")
 fig, ax = plt.subplots(figsize=(12, 6))
 
@@ -116,12 +113,12 @@ ax.set_xlabel("Position (x)", fontsize=14)
 ax.set_ylabel("Probability Density ($|\Psi|^2$)", fontsize=14)
 ax.set_title("Wave Packet Time Evolution (Forward Euler)", fontsize=16)
 
-# Plot the potential (scaled for visibility)
+#Plot the potential (scaled for visibility)
 V_plot_scale = np.max(frames[0]) / (V0 * 1.5) if V0 > 0 else 0
 ax.plot(x, V * V_plot_scale, 'k--', label=f"Potential (V0={V0})")
 ax.legend(loc='upper right')
 
-# The main line that will be animated
+#The main line that will be animated
 line, = ax.plot(x, frames[0], 'b-', lw=2, label="$|\Psi(x,t)|^2$")
 time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 norm_text = ax.text(0.02, 0.90, '', transform=ax.transAxes)
