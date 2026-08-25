@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-#display in notebooks
 from IPython.display import HTML, display
 
 #Simulation Parameters
