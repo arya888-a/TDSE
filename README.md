@@ -37,7 +37,7 @@ To run this code, you will need the following Python libraries:
 
 ## How to Run
 
-1. Copy the code into a suitable environment such as Jupyter Notebook or JupyterLab.
+1. Download the main.ipynb and open the code in a suitable environment such as Jupyter Notebook or JupyterLab.
 2. Adjust the simulation parameters (such as the number of grid points $N$, box length $L$, and time step $dt$) as needed.
 3. Execute the cells sequentially to observe the output animation and the evolution of the wave function norm.
 
