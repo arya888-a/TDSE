@@ -35,12 +35,6 @@ To run this code, you will need the following Python libraries:
 * `matplotlib`
 * `IPython` (required for rendering animations in Jupyter environments)
 
-You can install the required packages using pip:
-
-```bash
-pip install numpy matplotlib ipython
-```
-
 ## How to Run
 
 1. Copy the code into a suitable environment such as Jupyter Notebook or JupyterLab.
